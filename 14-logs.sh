@@ -24,7 +24,7 @@ fi
 VALIDATE(){
     if [ $1 -eq 0 ]
     then 
-       echo -e "Installing $2 is...$G SUCCESS $N" | tee -a $LOG_FILE
+       echo -e "Installing $2 is...$Y SUCCESS $N" | tee -a $LOG_FILE
     else
        echo -e "Installing $2 is...$R FAILURE $N" | tee -a $LOG_FILE
        exit 1
@@ -38,7 +38,7 @@ then
    dnf install mysql -y &>>$LOG_FILE
    VALIDATE $? "MYSQL"
 else
-    echo -e "Nothing to do MySQL... $Y is already isntalled $N" | tee -a $LOG_FILE
+    echo -e "Nothing to do MySQL... $G is already isntalled $N" | tee -a $LOG_FILE
 fi
 
 dnf installed python3 &>>$LOG_FILE
@@ -48,7 +48,7 @@ then
    dnf install python3 -y &>>$LOG_FILE
    VALIDATE $? "python3"
 else
-   echo -e "Nothing to do python... $Y is already installed $N" | tee -a $LOG_FILE
+   echo -e "Nothing to do python... $G is already installed $N" | tee -a $LOG_FILE
 fi
 
 dnf installed nginx &>>$LOG_FILE
@@ -58,5 +58,5 @@ then
    dnf install nginx -y &>>$LOG_FILE
    VALIDATE $? "nginx"
 else
-   echo -e "Nothing to do nginx... $Y is already installed $N" | tee -a $LOG_FILE
+   echo -e "Nothing to do nginx... $G is already installed $N" | tee -a $LOG_FILE
 fi
