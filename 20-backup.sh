@@ -48,41 +48,40 @@ then
 fi
 
 if [ ! -d $SOURCE_DIR ]
-then 
-   echo -e "$R Source Directory $SOURCE_DIR does not exist. Please check $N"
-   exit 1
+then
+    echo -e "$R Source Directory $SOURCE_DIR does not exist. Please check $N"
+    exit 1
 fi
 
 if [ ! -d $DEST_DIR ]
-then 
-   echo -e "$R Destionation Directory $DEST_DIR does not exist. Please check $N"
-   exit 1
+then
+    echo -e "$R Destination Directory $DEST_DIR does not exist. Please check $N"
+    exit 1
 fi
 
 FILES=$(find $SOURCE_DIR -name "*.log" -mtime +$DAYS)
 
 if [ ! -z "$FILES" ]
-then 
+then
     echo "Files to zip are: $FILES"
     TIMESTAMP=$(date +%F-%H-%M-%S)
     ZIP_FILE="$DEST_DIR/app-logs-$TIMESTAMP.zip"
     find $SOURCE_DIR -name "*.log" -mtime +$DAYS | zip -@ "$ZIP_FILE"
 
     if [ -f $ZIP_FILE ]
-    then 
-        echo -e "Successfully created zip file"
+    then
+        echo -e "Successfully created Zip file"
 
-        while IFS= read -r line
+        while IFS= read -r filepath
         do
             echo "Deleting file: $filepath" | tee -a $LOG_FILE
             rm -rf $filepath
         done <<< $FILES
-
-        echo -e "Log files older than $DAYS from source directory removed ... $G success $N"
-    else 
+        echo -e "Log files older than $DAYS from source directory removed ... $G SUCCESS $N"
+    else
         echo -e "Zip file creation ... $R FAILURE $N"
         exit 1
     fi
 else
-    echo -e "No log files found older than 14 days ... $Y SKIPPING $N
-fi 
+    echo -e "No log files found older than 14 days ... $Y SKIPPING $N"
+fi
